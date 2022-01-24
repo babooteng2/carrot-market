@@ -48,7 +48,7 @@ const Home: NextPage = () => {
 
       <div className='bg-white p-10 rounded-2xl shadow-xl'>
 				<div className='flex mb-5 justify-between items-center'>					
-					<span>←</span>					
+					<span className='w-8 aspect-square rounded-lg bg-slate-400 text-white text-center flex items-center justify-center cursor-pointer hover:bg-teal-400 active:bg-yellow-500'>←</span>					
 					<div className='space-x-3'>
 						<span>⭐4.9</span>
 						<span className='shadow-xl p-2 rounded-md'>❤</span>
@@ -60,9 +60,9 @@ const Home: NextPage = () => {
 					<span className='text-xs text-gray-500'>Chair</span>
 					<div className='mt-4 mb-5 flex justify-between items-center'>
 						<div className='space-x-2'>
-							<button className="w-5 h-5 rounded-full bg-yellow-500" />
-							<button className="w-5 h-5 rounded-full bg-indigo-500" />
-							<button className="w-5 h-5 rounded-full bg-teal-500" />
+							<button className="w-5 h-5 rounded-full bg-yellow-500 focus:ring-2 ring-offset-2 ring-yellow-500 transition" />
+							<button className="w-5 h-5 rounded-full bg-indigo-500 focus:ring-2 ring-offset-2 ring-indigo-500 transition" />
+							<button className="w-5 h-5 rounded-full bg-teal-500 focus:ring-2 ring-offset-2 ring-teal-500 transition" />
 						</div>
 						<div className='flex items-center space-x-5'>
 							<button className='p-1.5 bg-blue-200 flex justify-center items-center rounded-lg w-10 aspect-square text-xl text-gray-500'>-</button>
