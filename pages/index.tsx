@@ -28,7 +28,7 @@ const Home: NextPage = () => {
 				hover:bg-teal-300 cursor-pointer hover:text-black active:bg-yellow-500 focus:bg-red-500'>Checkout</div>
       </div>
 
-			<div className='bg-white overflow-hidden rounded-2xl shadow-xl'>
+			<div className='bg-white overflow-hidden rounded-2xl shadow-xl group'>
 				<div className='bg-blue-500 p-6 pb-14'>
 					<span className='text-white text-2xl'>Profile</span>
 				</div>
@@ -38,7 +38,7 @@ const Home: NextPage = () => {
 							<span className='text-sm text-gray-500'>Orders</span>
 							<span className='font-semibold'>340</span>
 						</div>
-						<div className='h-24 w-24 bg-red-400 rounded-full' />
+						<div className='h-24 w-24 bg-red-400 rounded-full group-hover:bg-teal-500 transition-colors' />
 						<div className='flex flex-col items-center'>
 							<span className='text-sm text-gray-500'>Spent</span>
 							<span className='font-semibold'>$2,310</span>
@@ -81,7 +81,20 @@ const Home: NextPage = () => {
 					</div>
 				</div>
 			</div>
-
+			
+			<form className="flex flex-col space-y-2 bg-blue-500 p-10 rounded-2xl focus-within:bg-blue-200 disabled:opacity-5">
+				<input type="text" required placeholder="Username" className='required:border-2 border-yellow-500 invalid:bg-red-500'/>
+				<input type="password" required placeholder="Password" className='placeholder-shown:bg-teal-500 valid:bg-teal-500'/>
+				<span className='hidden peer-invalid:block text-red-500'>This input is invalid</span>
+				<input type="submit" value="Login" className='bg-white' />
+			</form>
+			<form className="flex flex-col space-y-2 bg-blue-500 p-10 rounded-2xl">
+				<input type="text" required placeholder="Username" className='peer'/>
+				<span className='hidden peer-valid:block peer-valid:text-teal-500'>Awesome username</span>
+				<span className='hidden peer-invalid:block peer-invalid:text-red-500'>This input is invalid</span>
+				<span className='hidden peer-hover:block peer-invalid:text-yellow-500'>Hello</span>
+				<input type="submit" value="Login" className='bg-white' />
+			</form>
     </div>
   );
 };
