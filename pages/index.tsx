@@ -95,7 +95,42 @@ const Home: NextPage = () => {
 				<span className='hidden peer-hover:block peer-invalid:text-yellow-500'>Hello</span>
 				<input type="submit" value="Login" className='bg-white' />
 			</form>
+
+			<div className='bg-white p-10 rounded-2xl shadow-xl'>
+				<details className='open:text-white open:bg-indigo-400'>
+					<summary className='select-none cursor-pointer'>What is my fav. food.</summary>
+					<div className='selection:bg-indigo-500 selection:text-white'>김치</div>
+				</details>
+			</div>
+
+			<div className='bg-white p-10 rounded-2xl shadow-xl'>
+				<ul className='list-decimal marker:text-teal-600'>
+					<li>hi</li>
+					<li>hi</li>
+					<li>hi</li>
+				</ul>
+			</div>
+
+			<div className='bg-white p-10 rounded-2xl shadow-xl'>
+				<input type="file" className='
+					file:border-0
+					file:rounded-md
+					file:px-3 file:py-2
+					file:bg-purple-400
+					file:text-white
+					file:text-sm
+					file:cursor-pointer
+					file:hover:text-purple-600
+					file:hover:bg-white
+					file:hover:border
+					file:transition-colors' />
+			</div>
+			<div className='bg-white p-10 rounded-2xl shadow-xl'>
+				<p className='first-letter:capitalize first-letter:hover:text-purple-400'>lorem ipsum dolor, sit amet consectetur adipisicing elit. Id, ex, minima alias ipsam molestiae inventore voluptas odit atque explicabo nostrum perspiciatis praesentium ratione nisi, dolorem iure quae? At, nulla mollitia?</p>
+			</div>
+
     </div>
+	
   );
 };
 
