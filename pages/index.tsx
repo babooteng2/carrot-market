@@ -4,11 +4,11 @@ import type { NextPage } from 'next'
 
 const Home: NextPage = () => {  
   return (
-    <div className='bg-slate-400 py-20 px-20 grid gap-10 min-h-screen'>
-      <div className='bg-white sm:bg-red-400 sm:hover:bg-pink-500 md:bg-teal-400 lg:bg-indigo-400 xl:bg-yellow-400 2xl:bg-pink-400 p-6 rounded-3xl shadow-xl'>
+    <div className='bg-slate-400 py-20 px-20 grid gap-10 min-h-screen xl:grid-cols-3 lg:grid-cols-2'>
+      <div className='flex flex-col justify-between p-6 rounded-3xl shadow-xl bg-white'>
         <span className='font-semibold text-3xl'>Select Item</span>
         <ul>
-					{[0, 1, 2, 3, 4, 5].map(i => 
+					{[0, 1, 2, 3,].map(i => 
 						<li key={i} className='flex justify-between my-2 odd:bg-yellow-100 even:bg-blue-50 only:bg-red-500'>
 							<span className='text-gray-500'>Grey Chair</span>
 							<span className='font-semibold'>$10</span>
@@ -16,7 +16,7 @@ const Home: NextPage = () => {
 					)}
 				</ul>
 				<ul>
-					{["a", "b", "c", ""].map((c, i) => (
+					{["a", "b", ""].map((c, i) => (
 						<li className='bg-red-500 py-2 empty:bg-blue-500' key={i}>{c}</li>
 						)) }
 				</ul>
@@ -24,32 +24,32 @@ const Home: NextPage = () => {
           <span>Total</span>
           <span className='font-semibold'>$20</span>
         </div>
-        <div className='mt-5 bg-blue-500 text-center rounded-xl w-3/4 text-white p-3 mx-auto
-				hover:bg-teal-300 cursor-pointer hover:text-black active:bg-yellow-500 focus:bg-red-500'>Checkout</div>
+        <button className='block mt-5 bg-blue-500 text-center rounded-xl w-3/4 text-white p-3 mx-auto
+				hover:bg-teal-300 cursor-pointer hover:text-black active:bg-yellow-500 focus:bg-red-500'>Checkout</button>
       </div>
 
-			<div className='bg-white overflow-hidden rounded-2xl shadow-xl group'>
-				<div className='bg-blue-500 p-6 pb-14'>
-					<span className='text-white text-2xl'>Profile</span>
-				</div>
-				<div className='rounded-2xl bg-white relative -top-5 p-6'>
-					<div className='flex relative -top-16 items-end justify-between'>
-						<div className='flex flex-col items-center'>
-							<span className='text-sm text-gray-500'>Orders</span>
-							<span className='font-semibold'>340</span>
-						</div>
-						<div className='h-24 w-24 bg-red-400 rounded-full group-hover:bg-teal-500 transition-colors' />
-						<div className='flex flex-col items-center'>
-							<span className='text-sm text-gray-500'>Spent</span>
-							<span className='font-semibold'>$2,310</span>
-						</div>
-					</div>
-					<div className='flex relative -mt-10 flex-col items-center -mb-5'>
-						<span className='text-lg font-semibold'>Tony Molloy</span>
-						<span className='text-sm text-gray-500'>New York, USA</span>
-					</div>
-				</div>
-			</div>
+      <div className='bg-white overflow-hidden rounded-2xl shadow-xl group'>
+        <div className='portrait:bg-indigo-600 landscape:bg-teal-500 p-6 pb-14 xl:pb-60'>
+          <span className='text-white text-2xl'>Profile</span>
+        </div>
+        <div className='rounded-2xl bg-white relative -top-5 p-6'>
+          <div className='flex relative -top-16 items-end justify-between'>
+            <div className='flex flex-col items-center'>
+              <span className='text-sm text-gray-500'>Orders</span>
+              <span className='font-semibold'>340</span>
+            </div>
+            <div className='h-24 w-24 bg-red-400 rounded-full group-hover:bg-teal-500 transition-colors' />
+            <div className='flex flex-col items-center'>
+              <span className='text-sm text-gray-500'>Spent</span>
+              <span className='font-semibold'>$2,310</span>
+            </div>
+          </div>
+          <div className='flex relative -mt-10 flex-col items-center -mb-5'>
+            <span className='text-lg font-semibold'>Tony Molloy</span>
+            <span className='text-sm text-gray-500'>New York, USA</span>
+          </div>
+        </div>
+      </div>
 
       <div className='bg-white p-10 rounded-2xl shadow-xl'>
 				<div className='flex mb-5 justify-between items-center'>					
@@ -126,7 +126,7 @@ const Home: NextPage = () => {
 					file:transition-colors' />
 			</div>
 			
-			<div className='bg-white p-10 rounded-2xl shadow-xl'>
+			<div className='bg-white p-10 rounded-2xl shadow-xl lg:col-span-2 xl:col-span-3'>
 				<p className='first-letter:capitalize first-letter:hover:text-purple-400'>lorem ipsum dolor, sit amet consectetur adipisicing elit. Id, ex, minima alias ipsam molestiae inventore voluptas odit atque explicabo nostrum perspiciatis praesentium ratione nisi, dolorem iure quae? At, nulla mollitia?</p>
 			</div>
 
