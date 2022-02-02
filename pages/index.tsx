@@ -4,9 +4,9 @@ import type { NextPage } from 'next'
 
 const Home: NextPage = () => {  
   return (
-    <div className='dark bg-slate-400 py-20 px-20 grid gap-10 min-h-screen xl:grid-cols-3 lg:grid-cols-2'>
+    <div className='bg-slate-400 py-20 px-20 grid gap-10 min-h-screen xl:grid-cols-3 lg:grid-cols-2'>
       <div className='bg-white dark:bg-black flex flex-col justify-between p-6 rounded-3xl shadow-xl '>
-        <span className='dark:text-white font-semibold text-3xl'>Select Item</span>
+        <span className='bg-[url("/vercel.svg")]  text-[#000] dark:text-white font-semibold text-3xl text-[80px]'>Select Item</span>
         <ul>
 					{[0, 1, 2, 3,].map(i => 
 						<li key={i} className='flex justify-between my-2 odd:bg-yellow-100 even:bg-blue-50 only:bg-red-500'>
