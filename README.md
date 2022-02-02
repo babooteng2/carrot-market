@@ -8,4 +8,5 @@ Serverless Carrot Market Clone using NextJS, Tailwind, Prisma, PlanetScale and C
 npx create-next-app@latest --typescript
 npm i next@latest react@rc react-dom@rc
 npm i -D tailwindcss postcss autoprefixer
+npm i @tailwindcss/forms
 ```
