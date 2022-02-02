@@ -4,28 +4,28 @@ import type { NextPage } from 'next'
 
 const Home: NextPage = () => {  
   return (
-    <div className='bg-slate-400 py-20 px-20 grid gap-10 min-h-screen xl:grid-cols-3 lg:grid-cols-2'>
-      <div className='flex flex-col justify-between p-6 rounded-3xl shadow-xl bg-white'>
-        <span className='font-semibold text-3xl'>Select Item</span>
+    <div className='dark bg-slate-400 py-20 px-20 grid gap-10 min-h-screen xl:grid-cols-3 lg:grid-cols-2'>
+      <div className='bg-white dark:bg-black flex flex-col justify-between p-6 rounded-3xl shadow-xl '>
+        <span className='dark:text-white font-semibold text-3xl'>Select Item</span>
         <ul>
 					{[0, 1, 2, 3,].map(i => 
 						<li key={i} className='flex justify-between my-2 odd:bg-yellow-100 even:bg-blue-50 only:bg-red-500'>
-							<span className='text-gray-500'>Grey Chair</span>
-							<span className='font-semibold'>$10</span>
+							<span className='text-gray-500 dark:text-gray-100'>Grey Chair</span>
+							<span className='font-semibold dark:text-white'>$10</span>
 						</li>
 					)}
 				</ul>
 				<ul>
 					{["a", "b", ""].map((c, i) => (
-						<li className='bg-red-500 py-2 empty:bg-blue-500' key={i}>{c}</li>
+						<li className='bg-red-500 py-2 empty:bg-blue-500 dark:text-white' key={i}>{c}</li>
 						)) }
 				</ul>
         <div className='flex justify-between mt-2 pt-2 border-t-2 border-dashed'>
-          <span>Total</span>
-          <span className='font-semibold'>$20</span>
+          <span className='dark:text-white'>Total</span>
+          <span className='font-semibold dark:text-gray-100'>$20</span>
         </div>
-        <button className='block mt-5 bg-blue-500 text-center rounded-xl w-3/4 text-white p-3 mx-auto
-				hover:bg-teal-300 cursor-pointer hover:text-black active:bg-yellow-500 focus:bg-red-500'>Checkout</button>
+        <button className='block mt-5 bg-blue-500 dark:bg-black dark:border text-center rounded-xl w-3/4 text-white p-3 mx-auto
+				hover:bg-teal-300 cursor-pointer dark:hover:bg-white dark:hover:text-white hover:text-black active:bg-yellow-500 focus:bg-red-500'>Checkout</button>
       </div>
 
       <div className='bg-white overflow-hidden rounded-2xl shadow-xl group'>
