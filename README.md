@@ -10,3 +10,9 @@ npm i next@latest react@rc react-dom@rc
 npm i -D tailwindcss postcss autoprefixer
 npm i @tailwindcss/forms
 ```
+
+## references
+
+```node
+https://heroicons.dev/
+```
