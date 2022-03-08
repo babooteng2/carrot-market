@@ -1,7 +1,9 @@
 import type { NextPage } from "next";
+import Layout from "../../components/layout";
 
 const ChatDetail: NextPage = () => {
   return (
+    <Layout canGoBack>
     <div className="py-10 px-4 space-y-4">
       
       <div className="flex items-start space-x-2">
@@ -32,6 +34,7 @@ const ChatDetail: NextPage = () => {
         </div>
       </div>
     </div>
+    </Layout>
   );
 };
 
