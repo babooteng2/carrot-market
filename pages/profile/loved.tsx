@@ -1,7 +1,9 @@
 import type { NextPage } from "next";
+import Layout from "../../components/layout";
 
 const Loved: NextPage = () => {
   return (
+    <Layout canGoBack title="관심목록">
     <div className="flex flex-col space-y-5 py-10">
       {[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1].map((_, i) => (
         <div
@@ -57,6 +59,7 @@ const Loved: NextPage = () => {
         </div>
       ))}
     </div>
+    </Layout>
   );
 };
 

@@ -18,20 +18,19 @@ function Layout({
   const onClick = () => {router.back();}  
   return (
     <div>
-      <div className={cls(
-        !canGoBack ?  "justify-center" : "",
-        "bg-white w-full text-lg font-medium py-3 fixed max-w-7xl text-gray-700 border-b top-0  flex items-center px-10"         
-      )}>
-        {canGoBack ? <button onClick={onClick}>
-        <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 19l-7-7 7-7"></path></svg>
-        </button> : null}
-        {title ? <span>{title}</span> : null}
+      <div className="bg-white w-full text-lg font-medium py-3 fixed max-w-7xl text-gray-700 border-b top-0 flex justify-center items-center px-10 min-h-[3.3rem] z-10">
+        {canGoBack ? (
+            <button onClick={onClick} className="absolute left-4">
+              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 19l-7-7 7-7"></path></svg>
+            </button>
+          ) : null}
+        {title ? <span className={cls( canGoBack ? "mx-auto" : "")}>{title}</span> : null}
       </div>
       <div className={cls("pt-[4.25rem]", hasTabBar ? "pb-24" : "")}>      
         {children}
       </div>
       {hasTabBar ? 
-        <nav className="bg-white w-full text-gray-800 border-t fixed bottom-0 max-w-7xl pt-5 pb-7 flex items-center px-10 justify-between text-xs">
+        <nav className="bg-white w-full text-gray-800 border-t fixed bottom-0 max-w-7xl pt-3 pb-5 flex items-center px-10 justify-between text-xs z-10">
           <Link href="/">
             <a className="flex flex-col items-center space-y-2">            
               <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg>
