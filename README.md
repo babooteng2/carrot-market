@@ -34,4 +34,11 @@ pscale region list -> check SLUG (ex)ap-southeast
 pscale database create <database> --region <region>
 pscale connect <database> and keep open terminal while in use
 complete .env file to set DATABASE_URL="mysql:<connected url>/<database>"
+
+two option add to schema.prisma
+client : previewFeatures = ["referentialIntegrity"]
+db : previewFeatures = "prisma"
+
+npx prisma db push
+go to and check https://app.planetscale.com/<yourid>/<database>/main/schema
 ```
