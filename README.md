@@ -41,4 +41,11 @@ db : previewFeatures = "prisma"
 
 npx prisma db push
 go to and check https://app.planetscale.com/<yourid>/<database>/main/schema
+
+환경변수(window+r 커맨드 :sysdm.cpl ,3)에 C:\Program Files\MySQL\MySQL Server 8.0\bin 추가
+pscale shell carrot-market main
+npx prisma studio
+
+npm i @prisma/client
+npx prisma generate
 ```
