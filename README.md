@@ -67,4 +67,5 @@ npx prisma studio
 https://heroicons.dev/
 npx prisma init
 https://docs.planetscale.com/concepts/planetscale-environment-setup
+https://react-hook-form.com/api
 ```

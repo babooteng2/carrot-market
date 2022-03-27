@@ -12,6 +12,7 @@ interface ILoginForm {
   username: string;
   email: string;
   password: string;
+  errors?: string;
 }
 
 export default function Forms() {
@@ -19,6 +20,10 @@ export default function Forms() {
     register, 
     handleSubmit,
     formState:{ errors },
+    setError,
+    setValue,
+    reset,
+    resetField,    
   } = useForm<ILoginForm>({
     /* defaultValues: {
       username: "Tom"
@@ -27,11 +32,16 @@ export default function Forms() {
     mode: "onChange"
   });  
   const onValid = (data: ILoginForm) => {
-    console.log( "im valid")
+    console.log( "im valid");
+    /* setError( "errors", {message: "Backend is temporary offline sorry."}) */
+    /* setError("username", {message: "Taken username"}); */
+    reset();
+    /* resetField("password"); */
   }
   const onInvalid = (errors:FieldErrors) => {
-    console.log( errors );
+    console.log( errors );  
   }  
+  /* setValue("username", "hello"); */
   return (
     <form onSubmit={handleSubmit(onValid, onInvalid)} className="flex flex-col space-y-2 max-w-md mx-auto mt-4">
       <input 
@@ -74,6 +84,7 @@ export default function Forms() {
       />
       <span>{errors.password?.message}</span>
       <input type="submit" value="Create Account" />
+      <span>{errors.errors?.message}</span>
     </form>
   )
 }
