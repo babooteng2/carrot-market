@@ -14,6 +14,10 @@ npm i prisma -D
 npm i @prisma/client
 클라이언트 최초 1회 생성(do not install for devDependency, it's working at server side)
 npx prisma generate
+
+If you use react ^18.0.0-rc.0 version, can see the messege "unable to resolve dependency"
+Add "--legacy-peer-deps" at the end of command line.
+npm i react-hook-form --legacy-peer-deps
 ```
 
 ## step to run project
