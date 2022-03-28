@@ -1,17 +1,23 @@
 import mitt from "next/dist/shared/lib/mitt";
+import type { UseFormRegisterReturn } from "react-hook-form";
 
 interface iInputProps {
   name: string;
   label: string;  
   kind?: "text" | "phone" | "email" | "price";
-  [key: string]: any;
+  type: string;
+  register: UseFormRegisterReturn;
+  required: boolean;
+  /* [key: string]: any; */
 }
 
 export default function Input({
   name,
   label,
   kind = "text",
-  ...rest
+  type,
+  register,  
+  required,
 }: iInputProps) {
   return (
     <div>
@@ -24,8 +30,10 @@ export default function Input({
         {kind == "text" ? (
           <div className="flex rounded-md shadow-sm ">
             <input 
-              id={name}             
-              { ...rest }  
+              id={name}
+              required={required}
+              { ...register }
+              type={type}
               className="appearance-none w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-orange-500 focus:border-orange-500" 
             /> 
           </div>
@@ -33,7 +41,12 @@ export default function Input({
         {kind == "phone" ? (
           <div className="flex rounded-md shadow-sm ">
             <span className="flex items-center justify-center px-3 rounded-l-md border border-r-0 border-gray-300 bg-gray-50 text-gray-500 select-none text-sm shadow-sm">+82</span>
-            <input id={name} className="appearance-none w-full px-3 py-2 border rounded-l-none border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-orange-500 focus:border-orange-500" { ...rest } />
+            <input 
+              id={name} 
+              required={required}
+              { ...register } 
+              type={type}
+              className="appearance-none w-full px-3 py-2 border rounded-l-none border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-orange-500 focus:border-orange-500" />
           </div>
           ) : null }
         {kind == "price" ? (
@@ -43,7 +56,9 @@ export default function Input({
             </div>
             <input
               id={name}
-              { ...rest }
+              required={required}
+              { ...register }
+              type={type}
               className="appearance-none pl-7 pr-14 w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-orange-500 focus:border-orange-500"
             />
             <div className="absolute right-0 pointer-events-none pr-3 flex items-center">

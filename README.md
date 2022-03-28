@@ -27,7 +27,7 @@ step1. open up 3 command pannel
 step2. use one for database first. $pscale connect carrot-market
 step3. you can see port already in use, then copy the port number which is changed.
 step4. .env paste your changed port.
-step5. use other pannel for prisima studio. $npx prisma studio, it is loaded from .env.
+step5. use other pannel for prisma studio. $npx prisma studio, it is loaded from .env.
 step6. finally, use the last pannel for run the project. $npm run dev.
 ```
 
