@@ -11,11 +11,24 @@ interface IEnterForm {
 }
 
 const Enter:NextPage = () => {
+  const [submitting, setSubmitting] = useState(false);
   const {register,handleSubmit,reset} = useForm();
   const [method, setMethod] = useState<"email" | "phone">("email");
   const onEmailClick = () => {setMethod("email"); reset();}
   const onPhoneClick = () => {setMethod("phone"); reset();}
-  const onValid = (data:IEnterForm) => { console.log( data )}  
+  const onValid = (data:IEnterForm) => {
+    setSubmitting(true);
+    fetch("/api/users/enter", {
+      method: "POST",
+      /* method: "POST", */
+      body: JSON.stringify(data),
+      headers: {
+        "Content-type":"application/json"
+      }
+    }).then(()=>{
+      setSubmitting(false);
+    })
+  }  
   return (
     <div className="mt-16 p-4">
       <h3 className="text-3xl font-bold text-center">Enter to Carrot</h3>
@@ -60,7 +73,9 @@ const Enter:NextPage = () => {
               type="number"
               kind="phone" 
             /> : null }              
-          {method === "phone" ? <Button text="Get one-time password" large/> : null }
+          {method === "phone" ? (
+            <Button text={submitting ? "Loading..." : "Get one-time password"} large />
+          ) : null }
         </form>
         <div className="mt-8">
           <div className="relative">
