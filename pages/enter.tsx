@@ -19,18 +19,9 @@ const Enter:NextPage = () => {
   const onEmailClick = () => {setMethod("email"); reset();}
   const onPhoneClick = () => {setMethod("phone"); reset();}
   const onValid = (data:IEnterForm) => {
-    enter( data );
-    /* setSubmitting(true);
-    fetch("/api/users/enter", {
-      method: "POST",      
-      body: JSON.stringify(data),
-      headers: {
-        "Content-type":"application/json"
-      }
-    }).then(()=>{
-      setSubmitting(false);
-    }) */
-  }  
+    enter( data );    
+  }
+  console.log( loading, data, error );
   return (
     <div className="mt-16 p-4">
       <h3 className="text-3xl font-bold text-center">Enter to Carrot</h3>
