@@ -19,9 +19,10 @@ const Enter:NextPage = () => {
   const onEmailClick = () => {setMethod("email"); reset();}
   const onPhoneClick = () => {setMethod("phone"); reset();}
   const onValid = (data:IEnterForm) => {
+    if(loading) return;
     enter( data );    
   }
-  console.log( loading, data, error );
+  /* console.log( loading, data, error ); */
   return (
     <div className="mt-16 p-4">
       <h3 className="text-3xl font-bold text-center">Enter to Carrot</h3>
