@@ -9,67 +9,38 @@ async function handler(
     req:NextApiRequest, 
     res:NextApiResponse
   ) {
-
-   /*  if( req.method !== "POST") res.status(401).end();
-    console.log( req.body ); */
      const { phone, email } = req.body;
      const payload = phone ? {phone : +phone} : {email};
-   
+   /* 
       const user = await client.user.upsert({      
         where: {
-          ...payload,
-         /*  ...(phone && {phone: +phone} ),
-          ...(email && {email} ), */
+          ...payload,     
         },
         create: {
           name: "Anonymous",
-          ...payload,
-          /* ...(phone && {phone: +phone} ),
-          ...(email && {email} ), */
+          ...payload,          
         },
         update: {
 
         }
-      })   
-   console.log( user )
-/* 
-    if( email ) {
-      user = await client.user.findUnique({
-        where: {
-          email,
+      }) */
+      const token = await client.token.create({
+        data: {
+          payload: "1234",
+          user: {
+            connectOrCreate: {
+              where: {
+                ...payload,     
+              },
+              create: {
+                name: "Anonymous",
+                ...payload,          
+              },
+            }
+          },
         }
       });
-      if( user ) console.log( "found it. ")
-      if( !user ) {
-        console.log( "Did not find, will create")
-        user = await client.user.create({
-          data: {
-            name: "Anonymous",
-            email,
-          }
-        });
-      }
-      console.log( user )
-    }
-    if( phone ) {
-      user = await client.user.findUnique({
-        where: {
-          phone: +phone,
-        }
-      });
-      if( user ) console.log( "found it. ")
-      if( !user ) {
-        console.log( "Did not find, will create")
-        user = await client.user.create({
-          data: {
-            name: "Anonymous",
-            phone: +phone,
-          }
-        });
-      }
-      console.log( user )
-    }
-     */
+      console.log( token )
     return res.status(200).end();   
 }
 
