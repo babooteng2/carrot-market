@@ -1,47 +1,38 @@
 // connection handler를 기본으로 export 해주면 됨
 
-import withHandler from "@libs/server/withHandler";
+import withHandler, { ResponseType } from "@libs/server/withHandler";
 import client from "@libs/server/client";
 import { NextApiRequest, NextApiResponse } from "next";
 
-
 async function handler(
     req:NextApiRequest, 
-    res:NextApiResponse
+    res:NextApiResponse<ResponseType>
   ) {
-     const { phone, email } = req.body;
-     const payload = phone ? {phone : +phone} : {email};
-   /* 
-      const user = await client.user.upsert({      
-        where: {
-          ...payload,     
+    const { phone, email } = req.body;    
+    const user = phone ? {phone : +phone} : email ? {email} : null;
+    // Bad Request
+    if( !user ) return res.json({ok: false});
+    const payload = Math.floor(100000 + Math.random() * 90000) + "";
+    const token = await client.token.create({
+      data: {
+        payload,
+        user: {
+          connectOrCreate: {
+            where: {
+              ...user,
+            },
+            create: {
+              name: "Anonymous",
+              ...user,
+            },
+          }
         },
-        create: {
-          name: "Anonymous",
-          ...payload,          
-        },
-        update: {
-
-        }
-      }) */
-      const token = await client.token.create({
-        data: {
-          payload: "1234",
-          user: {
-            connectOrCreate: {
-              where: {
-                ...payload,     
-              },
-              create: {
-                name: "Anonymous",
-                ...payload,          
-              },
-            }
-          },
-        }
-      });
-      console.log( token )
-    return res.status(200).end();   
+      }
+    });
+    console.log( token )    
+    return res.json({
+      ok: true,
+    })
 }
 
 export default withHandler("POST", handler);
