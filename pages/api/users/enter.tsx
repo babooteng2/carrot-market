@@ -1,9 +1,10 @@
-// connection handler를 기본으로 export 해주면 됨
+import mail from "@sendgrid/mail";
 import twilio from "twilio";
 import withHandler, { ResponseType } from "@libs/server/withHandler";
 import client from "@libs/server/client";
 import { NextApiRequest, NextApiResponse } from "next";
 
+mail.setApiKey(process.env.SENDGRID_API_KEY!);
 const twilioClient = twilio(process.env.TWILIO_SID, process.env.TWILIO_TOKEN);
 
 async function handler(
@@ -39,6 +40,15 @@ async function handler(
         body: `Your login token is ${payload}.`
       });
       console.log( message );
+    } else if ( email ) {
+      const email = await mail.send({
+        from: "babooteng2@gmail.com",
+        to: "babooteng2@gmail.com",
+        subject:  "Your Carrot Market Verification Email",
+        text: `Your token i ${payload}`,
+        html: `<strong>Your token is ${payload}</strong>`,
+      });
+      console.log( email );
     }
     return res.json({
       ok: true,

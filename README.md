@@ -20,6 +20,7 @@ Add "--legacy-peer-deps" at the end of command line.
 npm i react-hook-form --legacy-peer-deps
 
 npm i twilio
+npm i --save @sendgrid/mail
 ```
 
 ## step to run project
