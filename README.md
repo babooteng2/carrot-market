@@ -8,7 +8,7 @@ Serverless Carrot Market Clone using NextJS, Tailwind, Prisma, PlanetScale and C
 npx create-next-app@latest --typescript
 npm i next@latest react@rc react-dom@rc
 npm i -D tailwindcss postcss autoprefixer
-npm i @tailwindcss/forms
+
 npm i prisma -D
 
 npm i @prisma/client
@@ -32,6 +32,9 @@ step3. you can see port already in use, then copy the port number which is chang
 step4. .env paste your changed port.
 step5. use other pannel for prisma studio. $npx prisma studio, it is loaded from .env.
 step6. finally, use the last pannel for run the project. $npm run dev.
+
+user      User     @relation(fields: [userId], references: [id], onDelete: Cascade) ->
+DB가 변경되었으면 $npx prisma db push로 원격저장소에 변경내용 전송
 ```
 
 ## scoop for planetScale install
