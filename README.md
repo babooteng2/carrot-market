@@ -21,6 +21,8 @@ npm i react-hook-form --legacy-peer-deps
 
 npm i twilio
 npm i --save @sendgrid/mail
+
+npm i iron-session
 ```
 
 ## step to run project
@@ -35,6 +37,8 @@ step6. finally, use the last pannel for run the project. $npm run dev.
 
 user      User     @relation(fields: [userId], references: [id], onDelete: Cascade) ->
 DB가 변경되었으면 $npx prisma db push로 원격저장소에 변경내용 전송
+
+pscale connect DB_NAME 명령 시 invalid_token 에러가 발생한다면 pscale auth login로 브라우저 로그인 인증 진행
 ```
 
 ## scoop for planetScale install
