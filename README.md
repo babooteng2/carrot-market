@@ -81,3 +81,7 @@ https://react-hook-form.com/api
 //try auth lib
 NextAuth.js
 ```
+
+### introduce
+
+- [] SWR - fetching data hook made by next.js team
