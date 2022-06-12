@@ -8,8 +8,8 @@ import Head from 'next/head';
 //https://dribbble.com/shots/15996385-Ecommerce-elements
 
 const Home: NextPage = () => {  
-  const user = useUser();
-  console.log( "user : ", user)
+  const {user, isLoading} = useUser();
+  console.log( "user : ", user, isLoading)
   return (
     <Layout title="홈" hasTabBar>
       <Head><title>Home</title></Head>
