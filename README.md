@@ -23,6 +23,8 @@ npm i twilio
 npm i --save @sendgrid/mail
 
 npm i iron-session
+
+npm i swr ( --legacy-peer-deps #when use react18 )
 ```
 
 ## step to run project
@@ -84,4 +86,4 @@ NextAuth.js
 
 ### introduce
 
-- [] SWR - fetching data hook made by next.js team
+- [x] SWR - fetching data hook made by next.js team
