@@ -16,7 +16,7 @@ export default function Item({
   hearts
 }: iItemProps) {
   return (
-    <Link href={`/items/${id}`}>
+    <Link href={`/products/${id}`}>
     <a className='flex px-4 pb-4 pt-8 cursor-pointer justify-between'>
       <div className='flex space-x-4'>
         <div className='w-20 h-20 bg-gray-400 rounded-md'/>
