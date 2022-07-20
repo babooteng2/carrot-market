@@ -6,10 +6,11 @@ export interface ResponseType {
   [key: string]: any;
 }
 
+type method = "GET" | "POST" | "DELETE"; 
 //type method = "GET" | "POST" | "DELETE";
 interface IConfigType {
   //methods: method[];
-  methods: "GET" | "POST" | "DELETE";
+  methods: method[];
   handler: (req: NextApiRequest, res: NextApiResponse) => void;
   isPrivate?: boolean;
 }
