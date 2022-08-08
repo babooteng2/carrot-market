@@ -13,17 +13,21 @@ interface IproductWithUser extends Product {
 }
 interface IitemDetailResponse {
   ok: boolean;
-  product: IproductWithUser;
-  relatedProducts: Product[];
+  product: IproductWithUser;  
+  //relatedProducts: Product[];  
+  relatedProducts: any[];  
   isLiked: boolean;
 }
 
 const ItemDetail: NextPage = () => {
-  const router = useRouter();
-  const {data} = useSWR<IitemDetailResponse>(router.query.id ? `/api/products/${router.query.id}` : null);
-  console.log( data );
+  const router = useRouter();  
+  const {data, mutate} = useSWR<IitemDetailResponse>(
+    router.query.id ? `/api/products/${router.query.id}` : null
+  );  
   const [toggleFav] = useMutation(`/api/products/${router.query.id}/fav`);
   const onFavClick = () => {
+    if(!data) return;
+    mutate({...data , isLiked: !data.isLiked}, false);
     toggleFav({});
   }
 
