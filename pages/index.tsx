@@ -8,9 +8,15 @@ import useSWR from 'swr';
 import { Product } from '@prisma/client';
 
 //https://dribbble.com/shots/15996385-Ecommerce-elements
-interface IProductsRespose {
+
+interface IProductWithFavs extends Product{  
+  _count: { favs: number };
+}
+interface IProductsRespose{
   ok: boolean;
-  products: Product[];
+  // products: Product[];
+  // products: IProductWithFavs[];
+  products: (Product & { _count: { favs: number }})[];
 }
 
 const Home: NextPage = () => {  
@@ -26,7 +32,7 @@ const Home: NextPage = () => {
             key={product.id}
             title={product.name}
             price={product.price}
-            hearts={1}
+            hearts={product._count.favs}
             comments={3}
           />
         ))}
