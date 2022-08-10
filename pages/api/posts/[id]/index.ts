@@ -10,7 +10,8 @@ async function handler(
     res:NextApiResponse<ResponseType>
   ) {    
     const {
-      query: {id}      
+      query: {id},
+      session: {user} 
     } = req;
     const post = await client.post.findUnique({
       where: {
@@ -45,10 +46,20 @@ async function handler(
         }
       },      
     });
+    const isCuriosity = Boolean( await client.curiosity.findFirst({
+      where: {
+        postId: +id.toString(),
+        userId: user?.id
+      },
+      select: {
+        id: true,
+      }
+    }))
     if( !post ) res.status(404).json({ok: false, message: "Not found post"});
     else res.json({
       ok: true,
       post,
+      isCuriosity
     });
   }
 

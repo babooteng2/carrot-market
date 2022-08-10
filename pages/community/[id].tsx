@@ -7,6 +7,9 @@ import { useRouter } from "next/router";
 import { Answer, Curiosity, Post, User } from "@prisma/client";
 import Link from "next/link";
 import Error from "next/error";
+import useMutation from "@libs/client/useMutation";
+import Preview from "twilio/lib/rest/Preview";
+import { cls } from "@libs/client/utils";
 
 interface IAnswerWithUser extends Answer {
   user: User;
@@ -27,16 +30,36 @@ interface IPostWithUser extends Post {
 interface ICoummunityPostResponse {
   ok: boolean;
   message: string;
-  post: IPostWithUser;    
+  post: IPostWithUser;
+  isCuriosity: boolean;
 }
 
 const CommunityPostDetail: NextPage = () => {
   const router = useRouter();
-  const {data, error} = useSWR<ICoummunityPostResponse>(
+  const {data, mutate} = useSWR<ICoummunityPostResponse>(
     router.query.id ? `/api/posts/${router.query.id}` : null    
   );
-  console.log( data );
-  console.log( error , "@@@@@")
+  const [curiosity] = useMutation(`/api/posts/${router.query.id}/curiosity`);
+  const onCuriosityClick = () => {
+    if( !data ) return
+    mutate(
+      {
+        ...data,
+        post: {
+          ...data.post,
+          _count: { 
+              ...data.post._count,
+              curiosities: data.isCuriosity
+                ? data.post._count.curiosities - 1 
+                : data.post._count.curiosities + 1
+            },      
+        },
+        isCuriosity: !data.isCuriosity
+      },
+      false
+    );
+    curiosity({});
+  }
   if( !data?.ok ) return <Error statusCode={404} title={data?.message}></Error>
   else
   return (
@@ -61,7 +84,10 @@ const CommunityPostDetail: NextPage = () => {
           <span className="text-orange-500 font-medium">Q.</span> {data?.post?.question}
         </div>
         <div className="flex px-4 space-x-5 mt-3 text-gray-700 py-2.5 border-t border-b-[2px]  w-full">
-          <span className="flex space-x-2 items-center text-sm">
+          <button className={cls(
+            "flex space-x-2 items-center text-sm",
+            data.isCuriosity ? "text-teal-600": ""
+          )} onClick={onCuriosityClick}>
             <svg
               className="w-4 h-4"
               fill="none"
@@ -77,7 +103,7 @@ const CommunityPostDetail: NextPage = () => {
               ></path>
             </svg>
             <span>궁금해요 {data?.post?._count?.curiosities}</span>
-          </span>
+          </button>
           <span className="flex space-x-2 items-center text-sm">
             <svg
               className="w-4 h-4"
