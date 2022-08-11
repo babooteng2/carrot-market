@@ -10,6 +10,8 @@ import Error from "next/error";
 import useMutation from "@libs/client/useMutation";
 import Preview from "twilio/lib/rest/Preview";
 import { cls } from "@libs/client/utils";
+import { useForm } from "react-hook-form";
+import { useEffect } from "react";
 
 interface IAnswerWithUser extends Answer {
   user: User;
@@ -27,19 +29,29 @@ interface IPostWithUser extends Post {
   }
 }
 
-interface ICoummunityPostResponse {
+interface ICommunityPostResponse {
   ok: boolean;
   message: string;
   post: IPostWithUser;
   isCuriosity: boolean;
 }
 
+interface IAnswerForm {
+  answer: string;
+}
+
+interface IAnswerResponse {
+  ok: boolean,
+  answer: Answer
+}
 const CommunityPostDetail: NextPage = () => {
   const router = useRouter();
-  const {data, mutate} = useSWR<ICoummunityPostResponse>(
+  const { register, handleSubmit, reset } = useForm<IAnswerForm>();
+  const {data, mutate} = useSWR<ICommunityPostResponse>(
     router.query.id ? `/api/posts/${router.query.id}` : null    
   );
-  const [curiosity] = useMutation(`/api/posts/${router.query.id}/curiosity`);
+  const [curiosity, {loading:curiosityLoading}] = useMutation(`/api/posts/${router.query.id}/curiosity`);
+  const [sendAnswer, {data:answerData, loading:answerLoading}] = useMutation<IAnswerResponse>(`/api/posts/${router.query.id}/answers`);
   const onCuriosityClick = () => {
     if( !data ) return
     mutate(
@@ -58,11 +70,18 @@ const CommunityPostDetail: NextPage = () => {
       },
       false
     );
-    curiosity({});
+    if( !curiosityLoading ) curiosity({});
+    
   }
-  if( !data?.ok ) return <Error statusCode={404} title={data?.message}></Error>
-  else
-  return (
+  const onValid = (form:IAnswerForm) => {    
+    if( answerLoading ) return;
+    sendAnswer( form );
+  }
+  useEffect(()=> {    
+    if( answerData && answerData.ok ) reset();
+  }, [answerData, reset])
+  if( !data?.ok ) return <Error statusCode={404} title={data?.message}></Error>  
+  else return (
     <Layout canGoBack>
     <div>
       <span className="inline-flex my-3 ml-4 items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-800">
@@ -131,7 +150,7 @@ const CommunityPostDetail: NextPage = () => {
             <span className="text-sm block font-medium text-gray-700">
               {answer.user.name}
             </span>
-            <span className="text-xs text-gray-500 block ">{/* answer.createdAt */}</span>
+            <span className="text-xs text-gray-500 block ">{answer?.createdAt?.toString().replace("T", " ").substring(0, 19)}</span>
             <p className="text-gray-700 mt-2">
               {answer.answer}
             </p>
@@ -139,11 +158,17 @@ const CommunityPostDetail: NextPage = () => {
         </div>
         ))}
       </div>
-      <div className="px-4 space-y-4">       
-        {/* <TextArea placeholder="Answer this question!"/> */}
-        <textarea placeholder="Answer this question!"/>
-        <Button text="Reply"/>
-      </div>
+      <form className="px-4 space-y-4" onSubmit={handleSubmit(onValid)}>
+        <TextArea 
+         name="description"
+         placeholder="Answer this question!"
+         required
+         register={register("answer", {required: true, minLength: 5})}
+        />  
+        <Button type="submit" text="Reply" />
+        {/* <Button text={answerLoading ? "Loading..." : "Reply"} /> */}
+        {/* <Button text="Reply">{answerLoading ? "Loading..." : "Reply"}</Button> */}
+      </form>
     </div>
     </Layout>
   );
