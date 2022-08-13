@@ -74,12 +74,16 @@ const CommunityPostDetail: NextPage = () => {
     
   }
   const onValid = (form:IAnswerForm) => {    
+    console.log( answerLoading )
     if( answerLoading ) return;
     sendAnswer( form );
   }
   useEffect(()=> {    
-    if( answerData && answerData.ok ) reset();
-  }, [answerData, reset])
+    if( answerData && answerData.ok ) { 
+      reset();
+      mutate();
+    }
+  }, [answerData, reset, mutate])
   if( !data?.ok ) return <Error statusCode={404} title={data?.message}></Error>  
   else return (
     <Layout canGoBack>
@@ -105,7 +109,7 @@ const CommunityPostDetail: NextPage = () => {
         <div className="flex px-4 space-x-5 mt-3 text-gray-700 py-2.5 border-t border-b-[2px]  w-full">
           <button className={cls(
             "flex space-x-2 items-center text-sm",
-            data.isCuriosity ? "text-teal-600": ""
+            data?.isCuriosity ? "text-teal-600": ""
           )} onClick={onCuriosityClick}>
             <svg
               className="w-4 h-4"
@@ -164,8 +168,11 @@ const CommunityPostDetail: NextPage = () => {
          placeholder="Answer this question!"
          required
          register={register("answer", {required: true, minLength: 5})}
-        />  
-        <Button type="submit" text="Reply" />
+        />          
+          <button type="submit" className="mt-2 w-full bg-orange-500 hover:bg-orange-600 text-white py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium focus:ring-2 focus:ring-offset-2 focus:ring-orange-500 focus:outline-none ">
+            {answerLoading ? "Loading..." : "Reply"}
+          </button>
+        {/* <Button type="submit" text="Reply" /> */}
         {/* <Button text={answerLoading ? "Loading..." : "Reply"} /> */}
         {/* <Button text="Reply">{answerLoading ? "Loading..." : "Reply"}</Button> */}
       </form>
