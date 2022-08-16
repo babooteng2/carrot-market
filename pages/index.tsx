@@ -1,33 +1,35 @@
-import type { NextPage } from 'next'
-import FloatingButton from '@components/floating-button';
-import Item from '@components/item';
-import Layout from '@components/layout';
-import useUser from '@libs/client/useUser';
-import Head from 'next/head';
-import useSWR from 'swr';
-import { Product } from '@prisma/client';
+import { NextPage } from "next";
+import FloatingButton from "@components/floating-button";
+import Item from "@components/item";
+import Layout from "@components/layout";
+// import useUser from "@libs/client/useUser";
+import Head from "next/head";
+import useSWR from "swr";
+import { Product } from "@prisma/client";
 
-//https://dribbble.com/shots/15996385-Ecommerce-elements
+// https://dribbble.com/shots/15996385-Ecommerce-elements
 
-interface IProductWithFavs extends Product{  
+export interface IProductWithFavs extends Product {
   _count: { favs: number };
 }
-interface IProductsRespose{
+interface IProductsRespose {
   ok: boolean;
   // products: Product[];
   // products: IProductWithFavs[];
-  products: (Product & { _count: { favs: number }})[];
+  products: (Product & { _count: { favs: number } })[];
 }
 
-const Home: NextPage = () => {  
-  const {user, isLoading} = useUser();
-  const { data } = useSWR<IProductsRespose>("/api/products");  
+const Home: NextPage = () => {
+  // const { user, isLoading } = useUser();
+  const { data } = useSWR<IProductsRespose>("/api/products");
   return (
     <Layout title="홈" hasTabBar>
-      <Head><title>Home</title></Head>
-      <div className='flex flex-col space-y-5 divide-y'>
-        {data?.products?.map((product) => (          
-          <Item 
+      <Head>
+        <title>Home</title>
+      </Head>
+      <div className="flex flex-col space-y-5 divide-y">
+        {data?.products?.map(product => (
+          <Item
             id={product.id}
             key={product.id}
             title={product.name}
@@ -36,7 +38,7 @@ const Home: NextPage = () => {
             comments={3}
           />
         ))}
-        <FloatingButton href='/products/upload'>
+        <FloatingButton href="/products/upload">
           <svg
             className="h-6 w-6"
             xmlns="http://www.w3.org/2000/svg"
