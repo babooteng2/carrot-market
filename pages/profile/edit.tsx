@@ -6,10 +6,16 @@ import Layout from "@components/layout";
 import { useForm } from "react-hook-form";
 import useUser from "@libs/client/useUser";
 import { useEffect } from "react";
+import useMutation from "@libs/client/useMutation";
 
+interface IEditProfileResponse {
+  ok: boolean;
+  error?: string;
+}
 interface IEditProfileForm {
   email?: string;
   phone?: string;
+  name?: string;
   formErrors?: string;
 }
 
@@ -22,18 +28,32 @@ const EditProfile: NextPage = () => {
     setError,
     formState: { errors },
   } = useForm<IEditProfileForm>();
-  const onValid = ({ email, phone }: IEditProfileForm) => {
-    console.log(email, phone);
-    if (email === "" && phone === "") {
+  const [editProfile, { data, loading }] =
+    useMutation<IEditProfileResponse>(`/api/users/me`);
+  const onValid = ({ email, phone, name }: IEditProfileForm) => {
+    if (loading) return;
+    if (email === "" && phone === "" && name === "") {
       setError("formErrors", {
         message: "Email OR Phone number are required. You need to choose one.",
+      });
+    } else {
+      editProfile({
+        email,
+        phone,
+        name,
       });
     }
   };
   useEffect(() => {
     if (user?.email) setValue("email", user.email);
     if (user?.phone) setValue("phone", user.phone);
+    if (user?.name) setValue("phone", user.name);
   }, [user, setValue]);
+  useEffect(() => {
+    if (data && !data.ok && data.error) {
+      setError("formErrors", { message: data.error });
+    }
+  }, [data]);
   return (
     <Layout canGoBack title="내정보">
       <div className="py-10 px-4 space-y-4">
@@ -54,6 +74,12 @@ const EditProfile: NextPage = () => {
             </label>
           </div>
           <Input
+            name="name"
+            label="name"
+            type="text"
+            register={register("name")}
+          />
+          <Input
             name="email"
             label="Email address"
             type="text"
@@ -73,7 +99,7 @@ const EditProfile: NextPage = () => {
             </span>
           ) : null}
           <span className="pt-6 block">
-            <Button text="Update profile" />
+            <Button loading={loading} text="Update profile" />
           </span>
         </form>
       </div>
