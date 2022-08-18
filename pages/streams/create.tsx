@@ -1,50 +1,64 @@
 import { NextPage } from "next";
+import Button from "@components/button";
+import Input from "@components/input";
+import Layout from "@components/layout";
+import TextArea from "@components/textarea";
+import { useForm } from "react-hook-form";
+import useMutation from "@libs/client/useMutation";
+import { useEffect } from "react";
+import { useRouter } from "next/router";
+import { Stream } from "@prisma/client";
 
-const Create:NextPage = () => {
-  return (
-    <div className="px-4 space-y-5 py-10">
-      <div>
-          <label htmlFor="name" className="text-sm font-medium text-gray-700">
-            name
-          </label>
-          <input 
-            id="name" 
-            type="text" 
-            className="appearance-none w-full px-3 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-orange-500 focus:border-orange-500" 
-            required /> 
-      </div>
-      <div>
-        <label className="text-sm font-medium text-gray-700" htmlFor="price">
-          Price
-        </label>
-        <div className="rounded-md relative flex items-center shadow-sm">
-          <div className="absolute left-0 pointer-events-none pl-3 flex items-center justify-center">
-            <span className="text-gray-500 text-sm">$</span>
-          </div>
-          <input
-           className="appearance-none pl-7 pr-14 w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-orange-500 focus:border-orange-500"
-           id="price"
-           type="text"
-           placeholder="0.00" />
-          <div className="absolute right-0 pointer-events-none pr-3 flex items-center">
-            <span className="text-gray-500">USD</span>
-          </div>
-        </div>
-      </div>
-      <div>
-        <label className="mb-1 block text-sm font-medium text-gray-700" htmlFor="description">
-          Description
-        </label>
-        <textarea
-         className="mt-1 shadow-sm w-full focus:ring-orange-500 rounded-md border-gray-300 focus:border-orange-500"
-         id="description"
-         rows={4} />
-      </div>
-      <button className="mt-5 w-full bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium focus:ring-2 focus:ring-offset-2 focus:ring-orange-500 focus:outline-none">
-        Go live
-      </button>
-    </div>
-  );
+interface ICreateResponse {
+  ok: boolean;
+  stream: Stream;
 }
+
+interface ICreateForm {
+  name: string;
+  price: string;
+  description: string;
+}
+
+const Create: NextPage = () => {
+  const router = useRouter();
+  const [createStream, { loading, data }] =
+    useMutation<ICreateResponse>(`/api/streams`);
+  const { register, handleSubmit } = useForm<ICreateForm>();
+  const onValid = (form: ICreateForm) => {
+    if (loading) return;
+    createStream(form);
+  };
+  useEffect(() => {
+    if (data && data.ok) {
+      router.push(`/streams/${data.stream.id}`);
+    }
+  }, [data, router]);
+  return (
+    <Layout canGoBack title="Go Live">
+      <form className="space-y-4 py-10 px-4" onSubmit={handleSubmit(onValid)}>
+        <Input
+          register={register("name", { required: true })}
+          required
+          label="Name"
+          name="name"
+        />
+        <Input
+          register={register("price", { required: true })}
+          required
+          label="Price"
+          name="price"
+          kind="price"
+        />
+        <TextArea
+          register={register("description", { required: true })}
+          name="description"
+          label="Description"
+        />
+        <Button loading={loading} text="Go Live" large />
+      </form>
+    </Layout>
+  );
+};
 
 export default Create;
