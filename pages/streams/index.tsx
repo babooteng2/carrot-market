@@ -4,6 +4,7 @@ import FloatingButton from "@components/floating-button";
 import Layout from "@components/layout";
 import { Stream } from "@prisma/client";
 import useSWR from "swr";
+import { useRouter } from "next/router";
 
 interface IStreamsResponse {
   ok: boolean;
@@ -11,11 +12,14 @@ interface IStreamsResponse {
 }
 
 const Streams: NextPage = () => {
-  const { data } = useSWR<IStreamsResponse>(`/api/streams`);
+  const router = useRouter();
+  const { data } = useSWR<IStreamsResponse>(
+    `/api/streams?page=${router.query.page ? router.query.page : 0}`,
+  );
   return (
     <Layout title="라이브" hasTabBar>
       <div className="divide-y-[1px] space-y-6">
-        {data?.streams.map(stream => (
+        {data?.streams?.map(stream => (
           <Link key={stream.id} href={`/streams/${stream.id}`}>
             <a className="px-4 block pt-10">
               <div className="w-full rounded-md shadow-sm bg-slate-300 aspect-video" />
