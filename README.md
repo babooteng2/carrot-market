@@ -70,7 +70,7 @@ option - sql DB/query 확인 용
 pscale shell carrot-market main
 npx prisma studio
 
-
+npm i ts-node - for dummy data / npx prisma db seed
 ```
 
 ## references
