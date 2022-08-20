@@ -7,7 +7,7 @@ import { Stream } from "@prisma/client";
 import { useForm } from "react-hook-form";
 import useMutation from "@libs/client/useMutation";
 import useUser from "@libs/client/useUser";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 
 interface IstreamMessage {
   message: string;
@@ -32,11 +32,16 @@ interface IStreamResponse {
 }
 
 const StreamDetail: NextPage = () => {
+  const scrollRef = useRef<HTMLDivElement>();
   const { user } = useUser();
   const router = useRouter();
   const { register, handleSubmit, reset } = useForm<IMessageForm>();
   const { data, mutate } = useSWR<IStreamResponse>(
     router.query.id ? `/api/streams/${router.query.id}` : null,
+    {
+      refreshInterval: 1000,
+      revalidateOnFocus: false,
+    },
   );
   const [sendMessage, { loading, data: sendMessageData }] = useMutation(
     `/api/streams/${router.query.id}/messages`,
@@ -44,13 +49,30 @@ const StreamDetail: NextPage = () => {
   const onValid = (form: IMessageForm) => {
     if (loading) return;
     reset();
-    sendMessage(form);
-  };
+    mutate(
+      prev =>
+        prev &&
+        ({
+          ...prev,
+          stream: {
+            ...prev.stream,
+            messages: [
+              ...prev.stream.messages,
+              {
+                id: Date.now(),
+                message: form.message,
+                user: { ...user },
+              },
+            ],
+          },
+        } as any),
+      false,
+    );
+    //    sendMessage(form);
+  };;
   useEffect(() => {
-    if (sendMessageData && sendMessageData.ok) {
-      mutate();
-    }
-  }, [sendMessageData, mutate]);
+    scrollRef?.current?.scrollIntoView();
+  }, []);
   return (
     <Layout canGoBack>
       <div className="py-10 px-4 space-y-4">
@@ -75,6 +97,7 @@ const StreamDetail: NextPage = () => {
               />
             ))}
           </div>
+          <div ref={scrollRef} />
         </div>
         <div className="fixed w-full mx-auto max-w-md bottom-2 inset-x-0">
           <form

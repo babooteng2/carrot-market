@@ -82,6 +82,7 @@ https://docs.planetscale.com/concepts/planetscale-environment-setup
 https://react-hook-form.com/api
 //try auth lib
 NextAuth.js
+- useSWR() options : swr.vercel.app/docs/options
 ```
 
 ### introduce
