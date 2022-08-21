@@ -5,7 +5,6 @@ import Button from "@components/button";
 import Input from "@components/input";
 import useMutation from "@libs/client/useMutation";
 import { cls } from "@libs/client/utils";
-import { isObject } from "util";
 import { useRouter } from "next/router";
 
 interface IEnterForm {
@@ -25,7 +24,7 @@ const Enter: NextPage = () => {
     useMutation<IMutationResult>("/api/users/enter");
   const [confirmToken, { loading: tokenLoading, data: tokenData }] =
     useMutation<IMutationResult>("/api/users/confirm");
-  const [submitting, setSubmitting] = useState(false);
+  const [submitting /* setSubmitting */] = useState(false);
   const { register, handleSubmit, reset } = useForm<IEnterForm>();
   const { register: tokenRegister, handleSubmit: tokenHandleSubmit } =
     useForm<ITokenForm>();

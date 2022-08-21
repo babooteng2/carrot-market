@@ -6,12 +6,17 @@ interface IUseCoordstate {
 }
 
 export default function useCoords() {
-  const [coords, setCoords] = useState<IUseCoordstate>({latitude:null, longitude:null});
-  const onSuccess = ({coords:{latitude, longitude}}: GeolocationPosition) => {
-    setCoords({latitude, longitude})
-  }
-  useEffect( () => {
+  const [coords, setCoords] = useState<IUseCoordstate>({
+    latitude: null,
+    longitude: null,
+  });
+  const onSuccess = ({
+    coords: { latitude, longitude },
+  }: GeolocationPosition) => {
+    setCoords({ latitude, longitude });
+  };
+  useEffect(() => {
     navigator.geolocation.getCurrentPosition(onSuccess);
-  },[] );
+  }, []);
   return coords;
 }

@@ -2,49 +2,41 @@ import { NextApiRequest, NextApiResponse } from "next";
 import withHandler, { ResponseType } from "@libs/server/withHandler";
 import client from "@libs/server/client";
 import { withApiSession } from "@libs/server/withSession";
-import { METHODS } from "http";
-import { parse } from "path";
-
 
 async function handler(
-    req:NextApiRequest, 
-    res:NextApiResponse<ResponseType>
-  ) {        
-    if( req.method === "POST") {
-      const {
-      body:{
+  req: NextApiRequest,
+  res: NextApiResponse<ResponseType>,
+) {
+  if (req.method === "POST") {
+    const {
+      body: { question, latitude, longitude },
+      session: { user },
+    } = req;
+    const post = await client.post.create({
+      data: {
         question,
         latitude,
-        longitude
-      },
-      session: {user},      
-    } = req;
-      const post = await client.post.create({
-        data: {          
-          question: question,
-          latitude,
-          longitude,          
-          user: {
-            connect: {
-              id: user?.id
-            }
+        longitude,
+        user: {
+          connect: {
+            id: user?.id,
           },
-        }
-      })
-      res.json({
-        ok: true,
-        post,
-      })
-    }
-  
-  if( req.method === "GET") {
-    const { query: {
-      latitude,
-      longitude
-    } } = req;    
-    const parsedLatitude  = parseFloat(latitude.toString());
+        },
+      },
+    });
+    res.json({
+      ok: true,
+      post,
+    });
+  }
+
+  if (req.method === "GET") {
+    const {
+      query: { latitude, longitude },
+    } = req;
+    const parsedLatitude = parseFloat(latitude.toString());
     const parsedLongitude = parseFloat(longitude.toString());
-    
+
     const posts = await client.post.findMany({
       include: {
         user: {
@@ -52,36 +44,36 @@ async function handler(
             id: true,
             name: true,
             avatar: true,
-            createdAt: true
-          }
+            createdAt: true,
+          },
         },
         _count: {
           select: {
             curiosities: true,
-            answers: true
-          }
-        }        
+            answers: true,
+          },
+        },
       },
       where: {
         latitude: {
           gte: parsedLatitude - 0.01,
-          lte: parsedLatitude + 0.01
+          lte: parsedLatitude + 0.01,
         },
         longitude: {
           gte: parsedLongitude - 0.01,
-          lte: parsedLongitude + 0.01
-        }
-      }
+          lte: parsedLongitude + 0.01,
+        },
+      },
     });
     res.json({
       ok: true,
-      posts,      
-    })
+      posts,
+    });
   }
 }
-export default withApiSession( 
+export default withApiSession(
   withHandler({
     methods: ["GET", "POST"],
     handler,
-  })
+  }),
 );

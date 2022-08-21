@@ -2,59 +2,62 @@ import { NextApiRequest, NextApiResponse } from "next";
 import withHandler, { ResponseType } from "@libs/server/withHandler";
 import client from "@libs/server/client";
 import { withApiSession } from "@libs/server/withSession";
-import { METHODS, request } from "http";
-
 
 async function handler(
-    req:NextApiRequest, 
-    res:NextApiResponse<ResponseType>
-  ) {    
-    const {query:{id}, session: {user}} = req;    
-    const product = await client.product.findUnique({
-      where: {
-        id: +id.toString(),
+  req: NextApiRequest,
+  res: NextApiResponse<ResponseType>,
+) {
+  const {
+    query: { id },
+    session: { user },
+  } = req;
+  const product = await client.product.findUnique({
+    where: {
+      id: +id.toString(),
+    },
+    include: {
+      // user: true
+      user: {
+        select: {
+          id: true,
+          name: true,
+          avatar: true,
+        },
       },
-      include: {
-        //user: true
-        user: {
-          select: {
-            id: true,
-            name: true,
-            avatar: true
-          }
-        }
-      }
-    })
-    const terms = product?.name.split(" ").map( word => ({
-      name: {
-        contains: word,
-      }
-    }));
-    const relatedProducts = await client.product.findMany({
-      where: {
-        OR: terms,
-        AND: {
-          id: {
-            not: product?.id
-          }
-        }
-      }
-    })
-    const isLiked = Boolean(await client.fav.findFirst({
+    },
+  });
+  const terms = product?.name.split(" ").map(word => ({
+    name: {
+      contains: word,
+    },
+  }));
+  const relatedProducts = await client.product.findMany({
+    where: {
+      OR: terms,
+      AND: {
+        id: {
+          not: product?.id,
+        },
+      },
+    },
+  });
+  const isLiked = Boolean(
+    await client.fav.findFirst({
       where: {
         productId: product?.id,
-        userId: user?.id
+        userId: user?.id,
       },
       select: {
-        id: true
-      }
-    }))
-    res.json({ ok: true, product, relatedProducts, isLiked });
+        id: true,
+      },
+    }),
+  );
+  res.json({ ok: true, product, relatedProducts, isLiked });
 }
 
-export default withApiSession( 
+export default withApiSession(
   withHandler({
     methods: ["GET"],
     handler,
-  })
+  }),
 );

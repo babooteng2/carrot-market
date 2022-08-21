@@ -31,14 +31,13 @@ async function handler(
       stream,
     });
   } else if (req.method === "GET") {
-    const queryPage = page ? +page.toString() : 1;
+    const queryPage = +page.toString() || 1;
     const currentPage = queryPage - 1;
     const pageSize = 10;
     const streams = await client.stream.findMany({
       take: pageSize,
       skip: currentPage * pageSize,
     });
-    console.log(page, currentPage, pageSize);
     res.json({
       ok: true,
       streams,
