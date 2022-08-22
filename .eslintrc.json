@@ -54,7 +54,8 @@
     "consistent-return": 0,
     "func-names": 0,
     "import/prefer-default-export": 0,
-    "@typescript-eslint/no-non-null-assertion": 0    
+    "@typescript-eslint/no-non-null-assertion": 0,
+    "jsx-a11y/alt-text": 0    
   },
   "globals": {
     "React": "writable"

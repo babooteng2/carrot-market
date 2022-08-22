@@ -85,6 +85,11 @@ NextAuth.js
 - useSWR() options : swr.vercel.app/docs/options
 ```
 
+## join
+``` node
+https://dash.cloudflare.com/sign-up
+```
+
 ### introduce
 
 - [x] SWR - fetching data hook made by next.js team
