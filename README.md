@@ -71,6 +71,16 @@ pscale shell carrot-market main
 npx prisma studio
 
 npm i ts-node - for dummy data / npx prisma db seed
+
+- image upload
+DCU ( direct-creator-upload )
+https://developers.cloudflare.com/images/cloudflare-images/upload-images/direct-creator-upload/
+Caution : have to pay $5/month for 100,000 images
+go to images > use API (tap) > https://dash.cloudflare.com/profile/api-tokens > create token > set permission All accounts - Cloudflare Images:Edit and done
+Cloudflare Images:Edit
+get id, token and save on .env file like
+CF_ID = @@@ (Account ID)
+CF_TOKEN = @@@ (API Token)
 ```
 
 ## references
