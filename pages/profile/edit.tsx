@@ -46,17 +46,20 @@ const EditProfile: NextPage = () => {
       // upload file to CF URL
       const form = new FormData();
       form.append("file", avatar[0], `${user?.id}`);
-      await fetch(uploadURL, {
-        method: "POST",
-        body: form,
-      });
+      const {
+        result: { id },
+      } = await (
+        await fetch(uploadURL, {
+          method: "POST",
+          body: form,
+        })
+      ).json();
 
-      return;
       editProfile({
         email,
         phone,
         name,
-        // avatarUrl: CF URL
+        avatarId: id,
       });
     }
     editProfile({
@@ -65,17 +68,21 @@ const EditProfile: NextPage = () => {
       name,
     });
   };
+  const [avatarPreview, setAvatarPreview] = useState<string>();
   useEffect(() => {
     if (user?.email) setValue("email", user.email);
     if (user?.phone) setValue("phone", user.phone);
     if (user?.name) setValue("phone", user.name);
+    if (user?.avatar)
+      setAvatarPreview(
+        `https://imagedelivery.net/fe4Q0psONJV8oImEl9R2AQ/${user.avatar}/public`,
+      );
   }, [user, setValue]);
   useEffect(() => {
     if (data && !data.ok && data.error) {
       setError("formErrors", { message: data.error });
     }
   }, [data]);
-  const [avatarPreview, setAvatarPreview] = useState<string>();
   const avatarWatching = watch("avatar");
   useEffect(() => {
     if (avatarWatching && avatarWatching.length > 0) {
