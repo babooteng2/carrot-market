@@ -39,9 +39,17 @@ const ItemDetail: NextPage = () => {
     <Layout canGoBack title="근처의 물품">
       <div className="px-4 py-4">
         <div className="mb-8">
-          <div className="h-96 bg-slate-300" />
+          <div className="flex justify-center">
+            <img
+              src={`https://imagedelivery.net/fe4Q0psONJV8oImEl9R2AQ/${data?.product.image}/public`}
+              className="h-96 bg-slate-300"
+            />
+          </div>
           <div className="flex cursor-pointer py-3 border-t border-b items-center space-x-3">
-            <div className="w-12 h-12 rounded-full bg-slate-300" />
+            <img
+              src={`https://imagedelivery.net/fe4Q0psONJV8oImEl9R2AQ/${data?.product.user.avatar}/avatar`}
+              className="w-12 h-12 rounded-full bg-slate-300"
+            />
             <div>
               <p className="text-sm font-medium text-gray-700">
                 {data?.product?.user?.name}
