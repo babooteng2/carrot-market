@@ -40,10 +40,12 @@ const ItemDetail: NextPage = () => {
     <Layout canGoBack title="근처의 물품">
       <div className="px-4 py-4">
         <div className="mb-8">
-          <div className="flex justify-center">
-            <img
+          <div className="relative pb-80">
+            <Image
+              layout="fill"
               src={`https://imagedelivery.net/fe4Q0psONJV8oImEl9R2AQ/${data?.product.image}/public`}
-              className="h-96 bg-slate-300"
+              className="h-96 bg-slate-300 object-contain"
+              /* object-fit css property */
             />
           </div>
           <div className="flex cursor-pointer py-3 border-t border-b items-center space-x-3">
