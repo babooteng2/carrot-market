@@ -21,6 +21,9 @@ interface IitemDetailResponse {
   isLiked: boolean;
 }
 
+const IMG_PREFIX_URL = "https://imagedelivery.net/fe4Q0psONJV8oImEl9R2AQ/";
+const BLUR_IMG_DATA_URL = "72d5d2ac-e825-49a6-35b9-6ba394d3ba00";
+
 const ItemDetail: NextPage = () => {
   // const { user, isLoading } = useUser();
   const router = useRouter();
@@ -43,8 +46,10 @@ const ItemDetail: NextPage = () => {
           <div className="relative pb-80">
             <Image
               layout="fill"
-              src={`https://imagedelivery.net/fe4Q0psONJV8oImEl9R2AQ/${data?.product.image}/public`}
+              src={`${IMG_PREFIX_URL}${data?.product.image}/public`}
               className="h-96 bg-slate-300 object-contain"
+              placeholder="blur"
+              blurDataURL={`${IMG_PREFIX_URL}${BLUR_IMG_DATA_URL}/public`}
               /* object-fit css property */
             />
           </div>
@@ -52,7 +57,7 @@ const ItemDetail: NextPage = () => {
             <Image
               width={48}
               height={48}
-              src={`https://imagedelivery.net/fe4Q0psONJV8oImEl9R2AQ/${data?.product.user.avatar}/avatar`}
+              src={`${IMG_PREFIX_URL}${data?.product.user.avatar}/avatar`}
               className="w-12 h-12 rounded-full bg-slate-300"
             />
             <div>
