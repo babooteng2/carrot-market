@@ -48,6 +48,9 @@ pscale connect DB_NAME 명령 시 invalid_token 에러가 발생한다면 pscale
 ```node
 window power shell 에서 실행
 Invoke-Expression (New-Object System.Net.WebClient).DownloadString('https://get.scoop.sh')
+220831 updated - privileges error -> use this code
+    $ iwr -useb get.scoop.sh -outfile 'install.ps1'
+    $ .\install.ps1 -RunAsAdmin
 scoop install curl
 scoop bucket add pscale https://github.com/planetscale/scoop-bucket.git
 scoop install pscale
@@ -80,7 +83,7 @@ go to images > use API (tap) > https://dash.cloudflare.com/profile/api-tokens > 
 Cloudflare Images:Edit
 get id, token and save on .env file like
 CF_ID = @@@ (Account ID)
-CF_TOKEN = @@@ (API Token)
+CF_IMAGES_TOKEN = @@@ (API Token)
 ```
 
 ## references
